@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">projectOne</string>
+    <string name="enter">Enter</string>
+    <string name="quick_passwords">Quick Passwords</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>
