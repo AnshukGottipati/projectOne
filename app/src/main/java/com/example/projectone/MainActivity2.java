@@ -1,53 +1,33 @@
 package com.example.projectone;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
-
-import androidx.core.view.WindowCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.example.projectone.databinding.ActivityMain2Binding;
+import java.util.ArrayList;
 
 public class MainActivity2 extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityMain2Binding binding;
-
+    private RecyclerView passwordRecyclerView;
+    private passwordRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
 
-        binding = ActivityMain2Binding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        adapter = new passwordRecyclerViewAdapter(this);
+        passwordRecyclerView = findViewById(R.id.passwordRecyclerview);
 
-        setSupportActionBar(binding.toolbar);
+        passwordRecyclerView.setAdapter(adapter);
+        passwordRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        ArrayList<AccountPassword> ap= new ArrayList<>();
+        ap.add(new AccountPassword(1,"oculus","uknown@gmail.com","password1"));
+        ap.add(new AccountPassword(2,"youtube","hello@gmail.com","password2"));
+        ap.add(new AccountPassword(3,"twitter","world@gmail.com","password3"));
+        adapter.setDetails(ap);
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAnchorView(R.id.fab)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
     }
 }
