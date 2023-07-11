@@ -18,7 +18,7 @@
             android:layout_height="35dp"
             android:textStyle="bold"
             android:textSize="25sp"
-            android:text="Website Name"
+            android:hint="Website Name"
             android:id="@+id/txtWebsiteView"
             ></TextView>
         <TextView
@@ -26,7 +26,7 @@
             android:layout_height="35dp"
             android:textSize="20sp"
             android:layout_below="@id/txtWebsiteView"
-            android:text="Email Name"
+            android:hint="Email Name"
             android:id="@+id/txtEmailView"
             ></TextView>
         <TextView
@@ -35,7 +35,7 @@
             android:textSize="20sp"
             android:id="@+id/txtPasswordView"
             android:layout_below="@id/txtEmailView"
-            android:text="password name"
+            android:hint="password name"
             ></TextView>
     </RelativeLayout>
 

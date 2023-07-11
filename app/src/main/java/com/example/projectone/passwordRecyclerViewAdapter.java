@@ -1,5 +1,7 @@
 package com.example.projectone;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +19,14 @@ import java.util.ArrayList;
 
 public class passwordRecyclerViewAdapter extends RecyclerView.Adapter<passwordRecyclerViewAdapter.ViewHolder> {
     private static final String TAG = "passwordRecyclerViewAdapter";
+    private Context mContext;
+    public passwordRecyclerViewAdapter(Context mContext){
+        this.mContext = mContext;
+    }
 
     private ArrayList<AccountPassword> details = new ArrayList<>();
 
-    public passwordRecyclerViewAdapter(MainActivity2 mainActivity2) {
-    }
+
 
     @NonNull
     @Override
@@ -31,11 +36,20 @@ public class passwordRecyclerViewAdapter extends RecyclerView.Adapter<passwordRe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder,final int position) {
         Log.d(TAG, "onBindViewHolder: Called");
         holder.website.setText(details.get(position).getWebsiteName());
         holder.email.setText(details.get(position).getEmail());
         holder.password.setText(details.get(position).getPassword());
+
+        holder.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, account.class);
+
+                mContext.startActivity(intent);
+            }
+        });
 
     }
 
@@ -58,7 +72,7 @@ public class passwordRecyclerViewAdapter extends RecyclerView.Adapter<passwordRe
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             parent = itemView.findViewById(R.id.parent);
-            website = itemView.findViewById(R.id.txtWebsiteView);
+            website =  itemView.findViewById(R.id.txtWebsiteView);
             email = itemView.findViewById(R.id.txtEmailView);
             password = itemView.findViewById(R.id.txtPasswordView);
         }
