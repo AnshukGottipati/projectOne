@@ -16,15 +16,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class passwordRecyclerViewAdapter extends RecyclerView.Adapter<passwordRecyclerViewAdapter.ViewHolder> {
     private static final String TAG = "passwordRecyclerViewAdapter";
-    private Context mContext;
-    public passwordRecyclerViewAdapter(Context mContext){
-        this.mContext = mContext;
+    private Context context;
+    private List<AccountPassword> details = new ArrayList<>();
+    public passwordRecyclerViewAdapter(List<AccountPassword> details,Context context){
+        this.details = details;
+        this.context = context;
     }
 
-    private ArrayList<AccountPassword> details = new ArrayList<>();
+
 
 
 
@@ -45,9 +48,10 @@ public class passwordRecyclerViewAdapter extends RecyclerView.Adapter<passwordRe
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, account.class);
-
-                mContext.startActivity(intent);
+                Intent intent = new Intent(context, account.class);
+                String i = Integer.toString(holder.getAdapterPosition());
+                intent.putExtra("ind",i);
+                context.startActivity(intent);
             }
         });
 
@@ -58,10 +62,12 @@ public class passwordRecyclerViewAdapter extends RecyclerView.Adapter<passwordRe
         return details.size();
     }
 
-    public void setDetails(ArrayList<AccountPassword> details) {
+    public void setDetails(List<AccountPassword> details) {
         this.details = details;
         notifyDataSetChanged();
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private CardView parent;

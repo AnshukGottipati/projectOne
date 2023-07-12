@@ -18,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.896"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
+        app:maxImageSize="38dp"
         app:layout_constraintVertical_bias="0.916"
         tools:ignore="ImageContrastCheck"
         />
@@ -30,5 +30,20 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp"
         android:layout_margin="15dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.896"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.828"
+        android:src="@drawable/ic_floaticon_foreground"
+        app:maxImageSize="60dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
