@@ -15,16 +15,30 @@ public class account extends AppCompatActivity {
 
     private EditText editTextWN ,editTextE,editTextP;
     private String WN,E,P;
-    private Button edit;
+    private Button edit,remove;
     List<AccountPassword> ap;
     MyApplication myApplication = (MyApplication) this.getApplication();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account2);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        overridePendingTransition(R.anim.slide_in,R.anim.slide_out);
         ap = myApplication.getApList();
         initViews();
 
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = getIntent();
+                String c = intent1.getStringExtra("ind");
+                int index = Integer.parseInt(c);
+                ap.remove(index);
+                Intent intent2 = new Intent(account.this,MainActivity2.class);
+                startActivity(intent2);
+            }
+        });
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,14 +80,18 @@ public class account extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_out,R.anim.slide_in);
+    }
 
     private void initViews(){
 
         editTextWN = findViewById(R.id.editTextAC2Website);
         editTextE = findViewById(R.id.editTextAC2Email);
         editTextP = findViewById(R.id.editTextAC2Password);
-
+        remove = findViewById(R.id.AC2Button2);
         edit = findViewById(R.id.AC2Button);
     }
 }

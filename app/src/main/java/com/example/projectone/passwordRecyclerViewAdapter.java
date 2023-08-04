@@ -1,11 +1,14 @@
 package com.example.projectone;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,34 +19,62 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class passwordRecyclerViewAdapter extends RecyclerView.Adapter<passwordRecyclerViewAdapter.ViewHolder> {
+public class passwordRecyclerViewAdapter extends RecyclerView.Adapter<passwordRecyclerViewAdapter.MyViewHolder> implements Filterable {
     private static final String TAG = "passwordRecyclerViewAdapter";
     private Context context;
-    private List<AccountPassword> details = new ArrayList<>();
+    private Activity activity;
+    private List<AccountPassword> details;
+    private List<AccountPassword> detailsFull;
+
+    private ArrayList<String> id,website,email,password;
+
+    /**
     public passwordRecyclerViewAdapter(List<AccountPassword> details,Context context){
         this.details = details;
+        this.detailsFull = new ArrayList<>(details);
         this.context = context;
+
+
+
     }
+    **/
+    public passwordRecyclerViewAdapter(ArrayList id,ArrayList website,ArrayList email,ArrayList password,Context context,Activity activity){
+        //this.details = details;
+        //this.detailsFull = new ArrayList<>(details);
+        this.activity = activity;
+        this.context = context;
+        this.id = id;
+        this.website = website;
+        this.email= email;
+        this.password= password;
 
 
-
+    }
 
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_details,parent,false);
-        return new ViewHolder(view);
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.list_item_details, parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder,final int position) {
-        Log.d(TAG, "onBindViewHolder: Called");
+    public void onBindViewHolder(@NonNull MyViewHolder holder,final int position) {
+
+        holder.website_txt.setText(String.valueOf(website.get(position)));
+        holder.email_txt.setText(String.valueOf(email.get(position)));
+        holder.password_txt.setText(String.valueOf(password.get(position)));
+
+    /**
         holder.website.setText(details.get(position).getWebsiteName());
         holder.email.setText(details.get(position).getEmail());
         holder.password.setText(details.get(position).getPassword());
+
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,33 +85,65 @@ public class passwordRecyclerViewAdapter extends RecyclerView.Adapter<passwordRe
                 context.startActivity(intent);
             }
         });
+        **/
 
     }
 
     @Override
     public int getItemCount() {
-        return details.size();
+        //return details.size();
+        return website.size();
     }
+
 
     public void setDetails(List<AccountPassword> details) {
         this.details = details;
         notifyDataSetChanged();
     }
 
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<AccountPassword> filteredList = new ArrayList<>();
+            if (charSequence.toString().isEmpty()) {
+                filteredList.addAll(detailsFull);
+            } else {
+                for (AccountPassword item : detailsFull) {
+                    if (item.getWebsiteName().toLowerCase().contains(charSequence.toString().toLowerCase().trim())) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+            return filterResults;
+        }
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            details.clear();
+            details.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
         private CardView parent;
-        private TextView website;
-        private TextView email;
-        private TextView password;
+        private TextView website_txt;
+        private TextView email_txt;
+        private TextView password_txt;
 
-        public ViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             parent = itemView.findViewById(R.id.parent);
-            website =  itemView.findViewById(R.id.txtWebsiteView);
-            email = itemView.findViewById(R.id.txtEmailView);
-            password = itemView.findViewById(R.id.txtPasswordView);
+            website_txt =  itemView.findViewById(R.id.txtWebsiteView);
+            email_txt = itemView.findViewById(R.id.txtEmailView);
+            password_txt = itemView.findViewById(R.id.txtPasswordView);
         }
     }
+
 }
