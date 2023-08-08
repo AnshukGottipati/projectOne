@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".account"
 
-
     >
 
     <Button
@@ -20,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.662" />
+        app:layout_constraintVertical_bias="0.72" />
 
     <EditText
         android:id="@+id/editTextAC2Password"
@@ -28,7 +27,7 @@
         android:layout_height="65dp"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:minHeight="48dp"
         android:textColorHint="#A1887F"
         app:layout_constraintBottom_toTopOf="@+id/AC2Button"
@@ -56,13 +55,14 @@
         android:id="@+id/AC2Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit"
+        android:text="update"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.588" />
+        app:layout_constraintVertical_bias="0.636" />
 
     <TextView
         android:id="@+id/textView4"
@@ -72,9 +72,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextAC2Website"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.755" />
+        app:layout_constraintVertical_bias="0.819" />
 
     <EditText
         android:id="@+id/editTextAC2Website"
@@ -132,6 +133,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="243dp" />
+        app:layout_constraintGuide_end="182dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

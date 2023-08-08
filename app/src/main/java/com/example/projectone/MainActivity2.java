@@ -1,5 +1,7 @@
 package com.example.projectone;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -7,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -43,6 +47,8 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("Details List");
 
         btnNewEntry = findViewById(R.id.fab1);
         btnReload = findViewById(R.id.fab2);
@@ -69,13 +75,8 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-                //ap.add(new AccountPassword(myApplication.getNextId(),"Enter Website","Enter Email","Enter Password"));
-                //MyApplication.setNextId(MyApplication.getNextId()+1);
-                //adapter.setDetails(ap);
                 Intent intent = new Intent(MainActivity2.this,createRV.class);
                 startActivity(intent);
-
 
             }
         });
@@ -100,13 +101,21 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //adapter.setDetails(ap);
+                
 
             }
         });
 
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1){
+            recreate();
+        }
     }
 
     public void storeDataInArray(){
@@ -120,13 +129,33 @@ public class MainActivity2 extends AppCompatActivity {
                 email.add(cursor.getString(2));
                 password.add(cursor.getString(3));
             }
-            //Toast.makeText(this,"Worked",Toast.LENGTH_SHORT).show();
+
         }
 
 
     }
+    public void confirmDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete ?");
+        builder.setMessage("Are you sure you want to delete ?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                DataBaseHelper myDB = new DataBaseHelper(MainActivity2.this);
+                myDB.deleteAllData();
+                //finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
+            }
+        });
+        builder.create().show();
+    }
 
+    /**
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -146,7 +175,7 @@ public class MainActivity2 extends AppCompatActivity {
         });
         return super.onCreateOptionsMenu(menu);
     }
-
+**/
     @Override
     public void finish() {
         super.finish();

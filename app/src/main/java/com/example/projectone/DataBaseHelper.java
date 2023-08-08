@@ -1,7 +1,9 @@
 package com.example.projectone;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -69,5 +71,39 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
+
+    public void updateData(String website,String email,String password,String row_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_WEBSITE,website);
+        cv.put(COLUMN_USERNAME,email);
+        cv.put(COLUMN_PASSWORD,password);
+
+        long result = db.update(CUSTOMER_TABLE,cv," id=?", new String[]{row_id});
+        if(result == -1){
+            Toast.makeText(context,"Failed to Update", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context,"Successfully Added", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void deleteData(String row_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        long result = db.delete(CUSTOMER_TABLE," id=?",new String[]{row_id});
+
+        if(result == -1){
+            Toast.makeText(context,"Failed to remove", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context,"Successfully removed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    void deleteAllData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + CUSTOMER_TABLE);
+    }
+
 
 }

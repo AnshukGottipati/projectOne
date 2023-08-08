@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class passwordRecyclerViewAdapter extends RecyclerView.Adapter<passwordRecyclerViewAdapter.MyViewHolder> implements Filterable {
+public class passwordRecyclerViewAdapter extends RecyclerView.Adapter<passwordRecyclerViewAdapter.MyViewHolder> {
     private static final String TAG = "passwordRecyclerViewAdapter";
     private Context context;
     private Activity activity;
@@ -42,8 +42,7 @@ public class passwordRecyclerViewAdapter extends RecyclerView.Adapter<passwordRe
     }
     **/
     public passwordRecyclerViewAdapter(ArrayList id,ArrayList website,ArrayList email,ArrayList password,Context context,Activity activity){
-        //this.details = details;
-        //this.detailsFull = new ArrayList<>(details);
+
         this.activity = activity;
         this.context = context;
         this.id = id;
@@ -74,18 +73,21 @@ public class passwordRecyclerViewAdapter extends RecyclerView.Adapter<passwordRe
         holder.website.setText(details.get(position).getWebsiteName());
         holder.email.setText(details.get(position).getEmail());
         holder.password.setText(details.get(position).getPassword());
-
+     **/
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, account.class);
                 String i = Integer.toString(holder.getAdapterPosition());
-                intent.putExtra("ind",i);
-                context.startActivity(intent);
+                intent.putExtra("id",String.valueOf(id.get(position)));
+                intent.putExtra("website",String.valueOf(website.get(holder.getAdapterPosition())));
+                intent.putExtra("email",String.valueOf(email.get(holder.getAdapterPosition())));
+                intent.putExtra("password",String.valueOf(password.get(holder.getAdapterPosition())));
+                activity.startActivityForResult(intent,1);
             }
         });
-        **/
+
 
     }
 
@@ -96,39 +98,6 @@ public class passwordRecyclerViewAdapter extends RecyclerView.Adapter<passwordRe
     }
 
 
-    public void setDetails(List<AccountPassword> details) {
-        this.details = details;
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public Filter getFilter() {
-        return filter;
-    }
-    Filter filter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            List<AccountPassword> filteredList = new ArrayList<>();
-            if (charSequence.toString().isEmpty()) {
-                filteredList.addAll(detailsFull);
-            } else {
-                for (AccountPassword item : detailsFull) {
-                    if (item.getWebsiteName().toLowerCase().contains(charSequence.toString().toLowerCase().trim())) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = filteredList;
-            return filterResults;
-        }
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            details.clear();
-            details.addAll((List) filterResults.values);
-            notifyDataSetChanged();
-        }
-    };
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

@@ -1,5 +1,6 @@
 package com.example.projectone;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("PassGen");
         // shared preference when user comes second time to the app
         SharedPreferences sharedPreferences = getSharedPreferences("PREFS", 0);
         password = sharedPreferences.getString("password", "0");

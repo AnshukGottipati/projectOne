@@ -1,5 +1,6 @@
 package com.example.projectone;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +17,8 @@ public class createRV extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_rv);
-
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("Create Details");
         editTextWN = findViewById(R.id.editTextRVWebsite);
         editTextE = findViewById(R.id.editTextRVEmail);
         editTextP = findViewById(R.id.editTextRVPassword);
